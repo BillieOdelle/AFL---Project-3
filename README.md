@@ -1,4 +1,4 @@
-# AFL---Project-3
+# AFL-Project-3
 
 Overview
 
