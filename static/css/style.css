@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+}
+
+nav {
+    background: linear-gradient(35deg, rgb(16, 0, 247) 50%, rgb(254, 0, 0) 90%);
+    padding: 5px;
+    color: white;
+    text-align: center;
+}
