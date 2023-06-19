@@ -13,7 +13,7 @@ import pandas as pd
 #################################################
 # engine = create_engine("sqlite:///AFL.sqlite")
 engine = create_engine(
-    "postgresql+psycopg2://afl_user:password@localhost/AFL-Project")
+    "postgresql+psycopg2://afl_user:password@localhost/AFL_Project_3")
 # # reflect an existing database into a new model
 Base = automap_base()
 # # # reflect the tables
@@ -34,31 +34,24 @@ def game():
 
 @app.route('/api/games/')
 def games_api():
-    session = Session(engine)
-    results = engine.execute("SELECT * FROM games") 
-    session.close()
-    return jsonify(results)
+    results = engine.execute("SELECT * FROM games")
+    result = []
+    for row in results:
+        new_row = dict(row)
+        new_row['starttime'] = new_row['starttime'].strftime('%H:%M:%S')
+        result.append(new_row)
+    return jsonify(result)
 
 
 @app.route('/api/players/')
 def players_api():
-    session = Session(engine)
-    results = { playerid: name for playerid,name in session.query(Players.playerid, Players.name).all()}
-    
-    return jsonify(results)
+    results = engine.execute("SELECT * FROM players")
+    return jsonify([dict(_) for _ in results])
+
+# return jsonify(results)
 
 
 @app.route('/api/stats')
 def stats_api():
-    data = engine.execute("SELECT * FROM stats")
-    for stats in data:
-        return jsonify(stats)
-# @app.route('/api/data')
-# def Data():
-#     d = {
-#         'one': 10,
-#         'two': 20,
-#         'three': 30,
-#         'four': 40,
-#     }
-#     return d
+    results = engine.execute("SELECT * FROM stats")
+    return jsonify([dict(_) for _ in results])
