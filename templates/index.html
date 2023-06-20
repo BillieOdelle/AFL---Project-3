@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AFL Statistics</title>
-    <link href="/static/css/style.css" rel="stylesheet">
+    <!-- <link href="/static/css/style.css" rel="stylesheet"> -->
   </head>
   
   <body>
@@ -28,11 +28,10 @@
     <main>
       <div id='bar'></div>
     </main>
-    
-    
+        
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/static/js/logic.js"></script>
-  </body>
+    <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
+    </body>
 
 </html>

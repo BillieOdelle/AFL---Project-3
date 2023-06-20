@@ -11,7 +11,7 @@ import pandas as pd
 #################################################
 # Database Setup
 #################################################
-# engine = create_engine("sqlite:///AFL.sqlite")
+
 engine = create_engine(
     "postgresql+psycopg2://afl_user:password@localhost/AFL_Project_3")
 # # reflect an existing database into a new model
@@ -32,7 +32,7 @@ def game():
     return render_template("index.html")
 
 
-@app.route('/api/games/')
+@app.route('/api/games')
 def games_api():
     results = engine.execute("SELECT * FROM games")
     result = []
@@ -43,15 +43,17 @@ def games_api():
     return jsonify(result)
 
 
-@app.route('/api/players/')
+@app.route('/api/players')
 def players_api():
     results = engine.execute("SELECT * FROM players")
     return jsonify([dict(_) for _ in results])
-
-# return jsonify(results)
 
 
 @app.route('/api/stats')
 def stats_api():
     results = engine.execute("SELECT * FROM stats")
     return jsonify([dict(_) for _ in results])
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
