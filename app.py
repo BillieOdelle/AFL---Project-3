@@ -1,10 +1,12 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import numpy as np
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
+from sqlalchemy.sql import text
 import pandas as pd
+
 # read_games = pd.read_csv("Data/games.csv")
 # read_players = pd.read_csv("Data/players.csv")
 # read_stats = pd.read_csv("Data/stats.csv")
@@ -34,12 +36,37 @@ def game():
 
 @app.route('/api/games')
 def games_api():
-    results = engine.execute("SELECT * FROM games")
+    year = request.args.get('year')
+    if year is None:
+        year = 2021
+    results = engine.execute(text(
+        "SELECT * FROM games where year = :year"), year=year)
     result = []
     for row in results:
         new_row = dict(row)
         new_row['starttime'] = new_row['starttime'].strftime('%H:%M:%S')
         result.append(new_row)
+    return jsonify(result)
+
+
+@app.route('/api/report/home-and-away')
+def home_away_api():
+    year = request.args.get('year')
+    if year is None:
+        year = 2021
+    results = engine.execute(text(
+        "select gameid, (hometeamsscore > awayteamscore) as homewin from games where year = :year"), year=year)
+    result = dict()
+    result['total'] = 0
+    result['home'] = 0
+    result['away'] = 0
+    for row in results:
+        new_row = dict(row)
+        result['total'] = result['total'] + 1
+        if new_row['homewin'] is True:
+            result['home'] = result['home'] + 1
+        else:
+            result['away'] = result['away'] + 1
     return jsonify(result)
 
 
