@@ -3,7 +3,6 @@
 function  updateChart() {
   var yearSelect = document.getElementById('year-select')
   var selectedYear = yearSelect.value || 2021
-
   // Make the API call with the selected year
   d3.json('/api/report/home-and-away?year=' + selectedYear).then(function(apiData) {
     var data = [{
@@ -11,32 +10,25 @@ function  updateChart() {
       labels: ['Home Win', 'Away Win'],
       type: 'pie'
     }];
-    
     var layout = {
       height: 400,
       width: 500
     };
-    
     Plotly.newPlot('myDiv', data, layout);
 });
-
 d3.json('/api/report/goals-score?year=' + selectedYear).then(function(apiData) {
   var data = [
     {
-      x: [apiData.name],
-      y: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+      x: apiData.map(({name}) => name),
+      y: apiData.map(({goals}) => goals),
       type: 'bar'
     }
   ];
-
     var layout = {
       title: 'Top 10 goal scorers'
     }
-  
-  Plotly.newPlot('goalDiv', data);
-
+  Plotly.newPlot('goalsDiv', data);
 });
 }
-
 // Call the updateChart function initially with the default selected year
 updateChart();
