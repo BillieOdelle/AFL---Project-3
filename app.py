@@ -86,9 +86,19 @@ def goals_score_api():
 
 @app.route('/api/report/rainfall')
 def line_graph_data():
-    result1 = engine.execute(text("SELECT year, SUM(CASE WHEN rainfall > 0 THEN games.hometeamsscore + games.awayteamscore ELSE 0 END) AS score_with_rain, SUM(CASE WHEN rainfall = 0 THEN games.hometeamsscore + games.awayteamscore ELSE 0 END) AS score_without_rain FROM games GROUP BY year ORDER BY year;"))
-    result1.fetchall()
-    engine.dispose()
+    year = request.args.get('year')
+    if year is None:
+        year = 2021
+    result = engine.execute(text("SELECT year, SUM(CASE WHEN rainfall > 0 THEN games.homeTeamsScore + games.awayTeamScore ELSE 0 END) AS score_with_rain, SUM(CASE WHEN rainfall = 0 THEN games.homeTeamsScore + games.awayTeamScore ELSE 0 END) AS score_without_rain FROM games GROUP BY year ORDER BY year;"))
+    data = result.fetchall()
+    data_dict = []
+    for row in data:
+        data_dict.append({
+            'year': row.year,
+            'score_with_rain': row.score_with_rain,
+            'score_without_rain': row.score_without_rain
+        })
+    return jsonify(data_dict)
 
 
 @app.route('/api/players')

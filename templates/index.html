@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+  <br>
+  <br>
+  <br>
   <input type="button" value="Hide available routes" onclick="document.getElementById('p1').style.visibility='hidden'">
   <input type="button" value="Show available routes" onclick="document.getElementById('p1').style.visibility='visible'">
   <p id="p1">
@@ -10,14 +13,12 @@
     Top 10 Scorers: <a href="/api/report/goals-score">/api/report/goals-score</a><br>
     Rainfall: <a href="/api/report/rainfall">/api/report/rainfall</a>
   </p>
-
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Data Dashboard">
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>AFL Statistics</title>
   </head>
-
   <body>
     <div class="center-image">
       <style>
@@ -27,7 +28,6 @@
       }
     </style>
          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Australian_Football_League.svg/250px-       Australian_Football_League.svg.png" alt="AFL Image" height="300" width="400"></div>
-      
   <div class="center-image">
       <style>
       .center-image {
@@ -35,7 +35,7 @@
         justify-content: center;
       }
     </style>
-    </style><h1 style="color:blue; font: size 10000px; text-align: center;">AFL Statistics</h1>
+    </style><h1 style="color:blue; font-size:xx-large; text-align: center;">AFL Statistics</h1>
     </div>
     <div class="center-image">
       <style>
@@ -45,7 +45,6 @@
         }
       </style>
     </div>
-    
     <main>
       <div>
         <label for="year-select">Select Year:</label>
@@ -62,22 +61,19 @@
           <option value="2021" selected="selected">2021</option>
           <!-- Add more options for available years -->
         </select>
-        <button id="update-chart-btn" onClick="updateChart()">Update Chart</button>
-      </div>
-    </main>
-    
-  </style><h4 style="color:blue; font: size 100000000px; text-align: left;">Comparing wins if teams played at home versus playing away</h4>
-    <div id='myDiv'{width 800px; height: }><!-- Plotly chart will be drawn inside this DIV --></div>
-    <br>
-    <p>Top 10 goal scorers</p>
-    <div id='goalsDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
-    <div id="chart-container"></div>
-  </main>
-     
+        <button id="update-chart-btn" onClick="updateChart()" style="font-size: 200;">Update Chart</button>
+    </main> 
+    <div class="center-image">
+          <div id='myDiv'></div>
+          <div id='goalsDiv'></div><br> 
+         <br></div>
+         <br>    
+          <div id='lineDiv'></div>
+   </body>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
-    <!-- <img src="data:image/png;base64,{{ graph_url }}" alt="Line Graph"> -->
-    </main>
+  
+</main>
 </html>

@@ -1,4 +1,24 @@
-/* body {
+
+.custom-button {
+  background-color: blue; /* Set the desired background color */
+  color: green; /* Set the desired text color */
+  /* Add any other styles for the buttons */
+}
+
+.dropdown-box {
+   width: 1000px; /* Adjust the width as needed */
+   height: 1000px; /* Adjust the height as needed */
+   /* Add any other styles for the dropdown box */
+ }
+ 
+ .update-button {
+   width: 1000px; /* Adjust the width as needed */
+   height: 1000px; /* Adjust the height as needed */
+   /* Add any other styles for the dropdown box */
+ }
+
+
+body {
     margin: 0;
 }
 
@@ -7,7 +27,7 @@ nav {
     padding: 5px;
     color: white;
     text-align: center;
-} */
+}
 
 /* Box sizing rules */
 *,
@@ -50,6 +70,7 @@ img {
 h1 {
    text-decoration: underline;
    margin: 0.5em 0em;
+   size: 0vmax;
 }
 
 p, h2, h6 {
