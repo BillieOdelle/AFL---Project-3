@@ -1,67 +1,42 @@
 //logic.js
+// Function to update the chart based on the selected year
+function  updateChart() {
+  var yearSelect = document.getElementById('year-select')
+  var selectedYear = yearSelect.value || 2021
 
-d3.json('http://localhost:5000/api/stats').then(function(data)  {
-    console.log(data);
-})
-
-d3.json('http://localhost:5000/api/games').then(function(data)  {
-    console.log(data);
-})
-
-d3.json('http://localhost:5000/api/players').then(function(data)  {
-    console.log(data);
-})
-
-d3.json('/api/report/home-and-away?year=2021').then(function(apiData){
+  // Make the API call with the selected year
+  d3.json('/api/report/home-and-away?year=' + selectedYear).then(function(apiData) {
     var data = [{
-        values: [apiData.home, apiData.away],
-        labels: ['Home Win', 'Away Win'],
-        type: 'pie'
-      }];
-      
-      var layout = {
-        height: 400,
-        width: 500
-      };
-      
-      Plotly.newPlot('myDiv', data, layout);
-})
+      values: [apiData.home, apiData.away],
+      labels: ['Home Win', 'Away Win'],
+      type: 'pie'
+    }];
+    
+    var layout = {
+      height: 400,
+      width: 500
+    };
+    
+    Plotly.newPlot('myDiv', data, layout);
+});
 
-// var data = [{
-//     values: [19, 26, 55],
-//     labels: ['Residential', 'Non-Residential', 'Utility'],
-//     type: 'pie'
-//   }];
+d3.json('/api/report/goals-score?year=' + selectedYear).then(function(apiData) {
+  var data = [
+    {
+      x: [apiData.name],
+      y: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+      type: 'bar'
+    }
+  ];
+
+    var layout = {
+      title: 'Top 10 goal scorers'
+    }
   
-//   var layout = {
-//     height: 400,
-//     width: 500
-//   };
-  
-//   Plotly.newPlot('myDiv', data, layout);
-  
-//   //bar chart
-//   const xValues = [100,200,300,400,500,600,700,800,900,1000];
-  
-//   new Chart("myChart", {
-//     type: "line",
-//     data: {
-//       labels: xValues,
-//       datasets: [{ 
-//         data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-//         borderColor: "red",
-//         fill: false
-//       }, { 
-//         data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
-//         borderColor: "green",
-//         fill: false
-//       }, { 
-//         data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
-//         borderColor: "blue",
-//         fill: false
-//       }]
-//     },
-//     options: {
-//       legend: {display: false}
-//     }
-//   });
+  Plotly.newPlot('goalDiv', data);
+
+});
+}
+
+// Call the updateChart function initially with the default selected year
+updateChart();

@@ -7,9 +7,6 @@ from sqlalchemy import create_engine, func, inspect
 from sqlalchemy.sql import text
 import pandas as pd
 
-# read_games = pd.read_csv("Data/games.csv")
-# read_players = pd.read_csv("Data/players.csv")
-# read_stats = pd.read_csv("Data/stats.csv")
 #################################################
 # Database Setup
 #################################################
@@ -67,6 +64,20 @@ def home_away_api():
             result['home'] = result['home'] + 1
         else:
             result['away'] = result['away'] + 1
+    return jsonify(result)
+
+
+@app.route('/api/report/goals-score')
+def goals_score_api():
+    year = request.args.get('year')
+    if year is None:
+        year = 2021
+    results = engine.execute(text(
+        "SELECT playerid, name, sum(goals) as goals FROM stats where year = :year group by playerid, name order by goals desc limit 10"), year=year)
+    result = []
+    for row in results:
+        new_row = dict(row)
+        result.append(new_row)
     return jsonify(result)
 
 
