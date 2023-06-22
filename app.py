@@ -6,6 +6,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
 from sqlalchemy.sql import text
 import pandas as pd
+import matplotlib.pyplot as plt
+import base64
+from io import BytesIO
 
 #################################################
 # Database Setup
@@ -79,6 +82,13 @@ def goals_score_api():
         new_row = dict(row)
         result.append(new_row)
     return jsonify(result)
+
+
+@app.route('/api/report/rainfall')
+def line_graph_data():
+    result1 = engine.execute(text("SELECT year, SUM(CASE WHEN rainfall > 0 THEN games.hometeamsscore + games.awayteamscore ELSE 0 END) AS score_with_rain, SUM(CASE WHEN rainfall = 0 THEN games.hometeamsscore + games.awayteamscore ELSE 0 END) AS score_without_rain FROM games GROUP BY year ORDER BY year;"))
+    result1.fetchall()
+    engine.dispose()
 
 
 @app.route('/api/players')

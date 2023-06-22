@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  <input type="button" value="Hide available routes" onclick="document.getElementById('p1').style.visibility='hidden'">
+  <input type="button" value="Show available routes" onclick="document.getElementById('p1').style.visibility='visible'">
+  <p id="p1">
+    Match Statistics: <a href="/api/games">/api/games</a><br>
+    Home and Away: <a href="/api/report/home-and-away">/api/report/home-and-away</a><br>
+    Player Statistics: <a href="/api/players">/api/players</a><br>
+    Bonus Statistics: <a href="/api/stats">/api/stats</a><br>
+    Top 10 Scorers: <a href="/api/report/goals-score">/api/report/goals-score</a><br>
+    Rainfall: <a href="/api/report/rainfall">/api/report/rainfall</a>
+  </p>
 
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +26,7 @@
         justify-content: center;
       }
     </style>
-         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Australian_Football_League.svg/250px-       Australian_Football_League.svg.png" alt="AFL Image" height="150" width="200"></div>
+         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Australian_Football_League.svg/250px-       Australian_Football_League.svg.png" alt="AFL Image" height="300" width="400"></div>
       
   <div class="center-image">
       <style>
@@ -26,7 +35,7 @@
         justify-content: center;
       }
     </style>
-    </style><h1 style="color:blue; align:center;">AFL Statistics</h1>
+    </style><h1 style="color:blue; font: size 10000px; text-align: center;">AFL Statistics</h1>
     </div>
     <div class="center-image">
       <style>
@@ -38,17 +47,6 @@
     </div>
     
     <main>
-      <input type="button" value="Hide available routes" onclick="document.getElementById('p1').style.visibility='hidden'">
-      <input type="button" value="Show available routes" onclick="document.getElementById('p1').style.visibility='visible'">
-      <p id="p1">
-        Match Statistics: <a href="/api/games">/api/games</a><br>
-        Home and Away: <a href="/api/report/home-and-away">/api/report/home-and-away</a><br>
-        Player Statistics: <a href="/api/players">/api/players</a><br>
-        Bonus Statistics: <a href="/api/stats">/api/stats</a><br>
-        Top 10 Scorers: <a href="/api/report/goals-score">/api/report/goals-score</a>
-      </p>
-      <br>
-    
       <div>
         <label for="year-select">Select Year:</label>
         <select id="year-select">
@@ -68,19 +66,19 @@
       </div>
     </main>
     
-    <p>Comparing wins if teams played at home versus playing away</p>
-    <div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
+  </style><h4 style="color:blue; font: size 100000000px; text-align: left;">Comparing wins if teams played at home versus playing away</h4>
+    <div id='myDiv'{width 800px; height: }><!-- Plotly chart will be drawn inside this DIV --></div>
     <br>
     <p>Top 10 goal scorers</p>
     <div id='goalsDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
-    
-    </main>
+    <div id="chart-container"></div>
+  </main>
      
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.33.1/plotly.min.js"></script>
     <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
-    
+    <!-- <img src="data:image/png;base64,{{ graph_url }}" alt="Line Graph"> -->
     </main>
 
 </html>
